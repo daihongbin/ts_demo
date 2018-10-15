@@ -150,3 +150,133 @@ let x1 = 10;
 //let x1 = 20; //错误，不能进行多次声明
 
 //并不是要求两个均是块级作用域的声明TypeScript才会给出错误警告。
+function f6(x) {
+    //let x = 100; //方法参数已经使用了x这个变量,所以报错
+}
+
+function f7() {
+    let x = 100;
+    //var x = 100; //报错，因为let已经声明了x这个变量，所以var不能声明
+}
+
+//并不是说块级作用域不能用函数作用域变量声明，而是块级作用域变量需要在明显不同的块内声明
+function f8(condition,x) {
+    if(condition){
+        let x = 100;
+        return x;
+    }
+    return x;
+}
+
+f8(false,0)
+f8(true,0)
+
+//在一个嵌套作用域内引入一个新名字行为成为屏蔽,用这种方式会出现新问题也可以解决问题。
+//用let重写之前的sumMatrix函数
+function sumMatrix1(matrix:number[][]){
+    let sum = 0;
+    for(let i = 0;i < matrix.length;i++){
+        var currentRow = matrix[i];
+        for (let i = 0;i < currentRow.length;i++){
+            sum += currentRow[i];
+        }
+    }
+
+    return sum;
+}
+
+/*******************************************************************************************/
+//块级作用域变量的获取
+function theCityThatAlwaysSleeps() {
+    let getCity;
+
+    if(true){
+        let city = "Settle";
+        getCity = function () {
+            return city;
+        }
+    }
+
+    return getCity;
+}
+//在City的环境内获取到变量，所以if执行后可以获取到。
+
+for (let i = 0;i < 10;i++){
+    setTimeout(function () {
+        console.log(i);
+    },100 * i)
+}
+
+/*******************************************************************************************/
+//const 声明
+//用const声明后的值，引用后是不可变的
+const numLivesForCat = 9;
+
+const kitty = {
+    name: "Aurora",
+    numLives:numLivesForCat,
+}
+
+//错误的例子
+// kitty = {
+//     name:"Danielle",
+//     numLives:numLivesForCat
+// }
+
+//all "okay",用const声明的变量，内部依然可以赋值
+kitty.name = "Rory";
+kitty.name = "Kitty";
+kitty.name = "Cat";
+kitty.numLives--;
+//除非你用特殊的方法去避免，但是可以将对象的成员设置为只读的
+
+/*******************************************************************************************/
+//解构
+//解构数组
+let input = [1,2];
+let [first,second] = input;
+console.log(first);
+console.log(second);
+// 这创建了2个命名变量 first 和 second。 相当于使用了索引，但更为方便：
+
+first = input[0];
+second = input[1];
+
+//解构用于已声明的变量会更好
+[first,second] = [second,first]
+
+//作用于函数参数
+function f9([first,second]:[number,number]) {
+    console.log(first);
+    console.log(second);
+}
+
+//f9(input);
+
+//可以在数组里使用...语法创建剩余变量
+// let [first,...rest] = [1,2,3,4];
+// console.log(first);
+// console.log(rest);
+
+//由于是js，你可以忽略你不关心的尾随元素
+// let [first] = [1,2,3,4,5];
+// console.log(first);
+
+//或者其他元素
+// let [,second,fourth] = [1,2,3,4];
+
+//对象解构
+let o = {
+    a:"foo",
+    b:12,
+    c:"bar"
+};
+// let {a,b} = 0;
+
+//数组解构，可用没有声明的赋值
+// ({a,b} = {a:"baz",b:101});
+
+//对象里使用...语法创建剩余变量
+// let { a, ...passthrough } = o;
+// let total = passthrough.b + passthrough.c.length;
+
