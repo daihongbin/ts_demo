@@ -9,4 +9,3 @@ function welcome(person) {
 }
 var user = { firstName: "H", lastName: "mz" };
 console.log(welcome(user));
-//# sourceMappingURL=greeter.js.map

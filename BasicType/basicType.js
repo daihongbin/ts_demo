@@ -125,4 +125,3 @@ var strLength1 = someValue1.length;
 //使用JSX时，必须使用as进行转换
 /*******************************************************************************************/
 //let相当于js中的var关键字
-//# sourceMappingURL=basicType.js.map

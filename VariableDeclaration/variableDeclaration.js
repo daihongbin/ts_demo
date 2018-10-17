@@ -1,5 +1,17 @@
 /*******************************************************************************************/
 //变量声明
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var _a;
 /*******************************************************************************************/
 //let & const
 //var 声明
@@ -221,11 +233,68 @@ var o = {
     b: 12,
     c: "bar"
 };
-var _a;
 // let {a,b} = 0;
 //数组解构，可用没有声明的赋值
 // ({a,b} = {a:"baz",b:101});
 //对象里使用...语法创建剩余变量
 // let { a, ...passthrough } = o;
 // let total = passthrough.b + passthrough.c.length;
-//# sourceMappingURL=variableDeclaration.js.map
+/*******************************************************************************************/
+//属性重命名
+var newName1 = o.a, newName2 = o.b;
+//相当于这样子
+// let newName1 = o.a;
+// let newName2 = o.b;
+//这里的冒号不指示类型，指示类型可以这样子
+// let{a,b}:{a:string,b:number} = o;
+// /*******************************************************************************************/
+// 默认值
+// 默认值可以让你在属性为 undefined 时使用缺省值：
+function keepWholeObject(wholeObject) {
+    var a = wholeObject.a, _a = wholeObject.b, b = _a === void 0 ? 1001 : _a;
+}
+function f10(_a) {
+    var a = _a.a, b = _a.b;
+    console.log("解构函数");
+}
+//指定默认值，解构默认值有点麻烦，需要在默认值之前设置其格式
+function f11(_a) {
+    var _b = _a === void 0 ? { a: "", b: 0 } : _a, a = _b.a, b = _b.b;
+    //...
+}
+f11();
+//在需要解构的属性上给与一个默认或可选的属性用来替换主初始化列表
+function f12(_a) {
+    var _b = _a === void 0 ? { a: "" } : _a, a = _b.a, _c = _b.b, b = _c === void 0 ? 0 : _c;
+    //...
+}
+f12({ a: "yes" });
+f12();
+//f({}); //错误
+//小心使用解构，解构表达式尽量小而简单
+/*******************************************************************************************/
+// 展开
+//展开操作与解构相反。可以将一个数组展开为另外一个数组，或者将一个对象展开为另外一个对象
+//展开数组
+var first1 = [1, 2];
+var secnd2 = [3, 4];
+var bothPlus = [0].concat(first1, secnd2, [5]);
+//bothPlus的值将会为[0,1,2,3,4,5]
+// 展开操作创建了 first和second的一份浅拷贝。 它们不会被展开操作所改变。
+//展开对象
+var defaults = { food: "spicy", price: "$$", ambiance: "noisy" };
+var search = __assign({ food: "rich" }, defaults);
+//defaults里的food属性会重写food:"rich"
+//对象展开仅包括对象的自身可枚举属性。展开对象时，会丢失其方法
+var C1 = /** @class */ (function () {
+    function C1() {
+        this.p = 12;
+    }
+    C1.prototype.m = function () {
+    };
+    return C1;
+}());
+var cc = new C1();
+var clone = __assign({}, cc);
+clone.p;
+//clone.m();

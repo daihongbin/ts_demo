@@ -280,3 +280,73 @@ let o = {
 // let { a, ...passthrough } = o;
 // let total = passthrough.b + passthrough.c.length;
 
+/*******************************************************************************************/
+//属性重命名
+let {a:newName1,b:newName2} = o;
+//相当于这样子
+// let newName1 = o.a;
+// let newName2 = o.b;
+
+//这里的冒号不指示类型，指示类型可以这样子
+// let{a,b}:{a:string,b:number} = o;
+
+// /*******************************************************************************************/
+// 默认值
+// 默认值可以让你在属性为 undefined 时使用缺省值：
+function keepWholeObject(wholeObject:{a:string,b?:number}) {
+    let {a,b = 1001} = wholeObject;
+}
+//即使b为undefined，经过这个函数也会有值
+
+/*******************************************************************************************/
+// 函数声明
+//解构用于函数声明,
+type C = {a:string,b?:number};
+function f10({a,b}:C):void {
+    console.log("解构函数");
+}
+
+//指定默认值，解构默认值有点麻烦，需要在默认值之前设置其格式
+function f11({a,b} = {a:"",b:0}):void{
+    //...
+}
+f11();
+
+//在需要解构的属性上给与一个默认或可选的属性用来替换主初始化列表
+function f12({a,b = 0} = {a : ""}):void{
+    //...
+}
+
+f12({a:"yes"});
+f12();
+//f({}); //错误
+//小心使用解构，解构表达式尽量小而简单
+
+/*******************************************************************************************/
+// 展开
+//展开操作与解构相反。可以将一个数组展开为另外一个数组，或者将一个对象展开为另外一个对象
+
+//展开数组
+let first1 = [1,2];
+let secnd2 = [3,4];
+let bothPlus = [0,...first1,...secnd2,5];
+//bothPlus的值将会为[0,1,2,3,4,5]
+// 展开操作创建了 first和second的一份浅拷贝。 它们不会被展开操作所改变。
+
+//展开对象
+let defaults = {food:"spicy",price:"$$",ambiance:"noisy"};
+let search = {food:"rich",...defaults};
+//defaults里的food属性会重写food:"rich"
+
+//对象展开仅包括对象的自身可枚举属性。展开对象时，会丢失其方法
+class C1{
+    p = 12;
+    m(){
+
+    }
+}
+
+let cc = new C1();
+let clone = {...cc};
+clone.p;
+//clone.m();
