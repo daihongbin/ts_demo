@@ -1,3 +1,4 @@
+"use strict";
 //1.ts中类的定义
 /*
 //es5定义
@@ -10,19 +11,6 @@ function Person(name) {
 
 var p = new Person('张三');
 p.run();*/
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 /*
 class Person {
 
@@ -87,6 +75,143 @@ class Web extends Person{
 var w = new Web('李四');
 console.log(w.run());*/
 //ts中继承的探讨 父类与子类方法一致
+/*
+class Person {
+    name:string;
+
+    constructor(name:string){
+        this.name = name;
+    }
+
+    run():string{
+        return `${this.name}在运动`;
+    }
+}
+
+class Web extends Person{
+    constructor(name:string){
+        super(name);//调用父类的构造函数
+    }
+
+    run(): string {
+        return `${this.name}在运动 -- 子类`;
+    }
+
+    work():void{
+        console.log(`${this.name}在工作`);
+    }
+}
+
+var w = new Web('李四');
+console.log(w.run());
+w.work();*/
+//3.类里面的修饰符 typescript定义属性时提供了三种修饰符
+/*
+public 共有
+protected 保护，类及子类可访问
+private 私有，仅本类可访问
+属性不加修饰符，默认为公有
+*/
+//public
+/*
+class Person {
+    public name:string; //公有属性
+
+
+
+    constructor(name:string){
+        this.name = name;
+    }
+
+    run():string{
+        return `${this.name}在运动`;
+    }
+}
+
+class Web extends Person{
+    constructor(name:string){
+        super(name);//调用父类的构造函数
+    }
+
+    run(): string {
+        return `${this.name}在运动 -- 子类`;
+    }
+
+    work():void{
+        console.log(`${this.name}在工作`);
+    }
+}
+
+var w = new Web('李四');
+w.work();
+
+//类外部访问公有属性
+var p = new Person('哈哈哈');
+console.log(p.name);
+*/
+//protected 保护类型
+/*
+class Person {
+    protected name:string; //公有属性
+
+    constructor(name:string){
+        this.name = name;
+    }
+
+    run():string{
+        return `${this.name}在运动`;
+    }
+}
+
+class Web extends Person{
+    constructor(name:string){
+        super(name);//调用父类的构造函数
+    }
+
+    run(): string {
+        return `${this.name}在运动 -- 子类`;
+    }
+
+    work():void{
+        console.log(`${this.name}在工作`);
+    }
+}
+
+var w = new Web('李四');
+w.work();
+console.log(w.run());
+//属性“name”受保护，只能在类“Person”及其子类中访问。
+//console.log(w.name);
+*/
+//private
+//以下代码编译会报错
+/*
+class Person {
+    private name:string; //公有属性
+
+    constructor(name:string){
+        this.name = name;
+    }
+
+    run():string{
+        return `${this.name}在运动`;
+    }
+}
+
+class Web extends Person{
+    constructor(name:string){
+        super(name);//调用父类的构造函数
+    }
+
+    run(): string {
+        return `${this.name}在运动 -- 子类`;
+    }
+
+    work():void{
+        console.log(`${this.name}在工作`);
+    }
+}
+*/
 var Person = /** @class */ (function () {
     function Person(name) {
         this.name = name;
@@ -96,19 +221,6 @@ var Person = /** @class */ (function () {
     };
     return Person;
 }());
-var Web = /** @class */ (function (_super) {
-    __extends(Web, _super);
-    function Web(name) {
-        return _super.call(this, name) || this;
-    }
-    Web.prototype.run = function () {
-        return this.name + "\u5728\u8FD0\u52A8 -- \u5B50\u7C7B";
-    };
-    Web.prototype.work = function () {
-        console.log(this.name + "\u5728\u5DE5\u4F5C");
-    };
-    return Web;
-}(Person));
-var w = new Web('李四');
-console.log(w.run());
-w.work();
+var p = new Person('哈哈哈');
+console.log(p.run());
+document.qu;
