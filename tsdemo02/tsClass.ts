@@ -234,5 +234,3 @@ class Person{
 
 var p = new Person('哈哈哈');
 console.log(p.run());
-
-document.qu
